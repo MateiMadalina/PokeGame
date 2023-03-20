@@ -7,33 +7,41 @@ function App() {
   const [dataPokemon, setDataPokemon] = useState(null);
   const [link, setLink] = useState(null);
 
-  let readAPILocation = async () => {
+  const readAPILocations = async () => {
     const response = await fetch("https://pokeapi.co/api/v2/location");
     const data = await response.json();
     setDataLocation(data.results);
-    console.log(data.results);
+    // console.log(data.results);
   };
 
-  let readAPIPokemon = async (link) => {
+  const readAPILocation = async (link) => {
     const response = await fetch(`${link}`);
     const data = await response.json();
     const pokemonAreas = data.areas[0].url;
-    let readAPISprite = async (url) => {
-      const response = await fetch(`${url}`);
-      const data = await response.json();
-      console.log(data);
-    }
-    readAPISprite(pokemonAreas);
-  
-    // let rand = Math.floor(Math.random() * pokemonAreas.pokemon_encounters.length)
-    // console.log(rand)
-    // console.log(data.pokemon_encounters)
-    // setDataPokemon(data.pokemon_encounters[rand].pokemon.url);
+    readAPIPokemons(pokemonAreas);
+  }
+
+  const readAPIPokemons = async (url) => {
+    const response = await fetch(`${url}`);
+    const data = await response.json();
+    console.log(data.pokemon_encounters);
+    let rand = Math.floor(Math.random() * data.pokemon_encounters.length);
+    let URLPokemon = data.pokemon_encounters[rand].pokemon.url;
+    // console.log(URLPokemon);
+    readAPISprite(URLPokemon)
+    //setDataPokemon(data.pokemon_encounters[rand].pokemon.url);
+  }
+
+  const readAPISprite = async (sprite) => {
+    const response = await fetch(`${sprite}`);
+    const data = await response.json();
+    // console.log(data["sprite"]["other"]["dream_world"]["front_default"]);
+    console.log(data);
   }
   
 
   useEffect(() => {
-    readAPILocation();
+    readAPILocations();
   }, []);
 
   return (
@@ -43,7 +51,7 @@ function App() {
           key={index}
           location={location.url}
           name = {location.name}
-          click={() => {readAPIPokemon(location.url)}}
+          click={() => {readAPILocation(location.url)}}
           />
       ))}
     </div>
