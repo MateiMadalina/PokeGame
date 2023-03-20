@@ -14,14 +14,18 @@ function App() {
     console.log(data.results);
   };
 
-  let readAPIPokemon = async () => {
+  let readAPIPokemon = async (link) => {
     const response = await fetch(`${link}`);
     const data = await response.json();
-    let rand = Math.floor(Math.random() * data.pokemon_encounters.length)
+    const pokemonAreas = data.areas;
+    console.log(data.areas[0]);
+    //setDataPokemon(data.areas.url);
+    let rand = Math.floor(Math.random() * pokemonAreas.pokemon_encounters.length)
     console.log(rand)
     console.log(data.pokemon_encounters)
     setDataPokemon(data.pokemon_encounters[rand].pokemon.url);
   }
+  
 
   useEffect(() => {
     readAPILocation();
@@ -34,6 +38,7 @@ function App() {
           key={index}
           location={location.url}
           name = {location.name}
+          click={() => {readAPIPokemon(location.url)}}
           />
       ))}
     </div>
