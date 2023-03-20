@@ -17,13 +17,18 @@ function App() {
   let readAPIPokemon = async (link) => {
     const response = await fetch(`${link}`);
     const data = await response.json();
-    const pokemonAreas = data.areas;
-    console.log(data.areas[0]);
-    //setDataPokemon(data.areas.url);
-    let rand = Math.floor(Math.random() * pokemonAreas.pokemon_encounters.length)
-    console.log(rand)
-    console.log(data.pokemon_encounters)
-    setDataPokemon(data.pokemon_encounters[rand].pokemon.url);
+    const pokemonAreas = data.areas[0].url;
+    let readAPISprite = async (url) => {
+      const response = await fetch(`${url}`);
+      const data = await response.json();
+      console.log(data);
+    }
+    readAPISprite(pokemonAreas);
+  
+    // let rand = Math.floor(Math.random() * pokemonAreas.pokemon_encounters.length)
+    // console.log(rand)
+    // console.log(data.pokemon_encounters)
+    // setDataPokemon(data.pokemon_encounters[rand].pokemon.url);
   }
   
 
