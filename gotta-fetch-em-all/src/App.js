@@ -10,13 +10,17 @@ function App() {
   const [presArea, setPresArea] = useState(true);
   const [dataPokemonName, setDataPokemonName] = useState(null);
   const [areaCondition, setAreaCondition] = useState(true);
-  const [dataUserPokemon, setDataUserPokemon] = useState(null);
-  const [dataUserPokemonName, setDataUserPokemonName] = useState(null);
-  const [initialPokemonList, setInnitialPokemonList] = useState(["https://pokeapi.co/api/v2/pokemon/bulbasaur",
+  const [initialPokemonList, setInitialPokemonList] = useState(["https://pokeapi.co/api/v2/pokemon/bulbasaur",
     "https://pokeapi.co/api/v2/pokemon/charizard",
     "https://pokeapi.co/api/v2/pokemon/poliwhirl"]);
   const [finalPokemonList, setFinalPokemonList] = useState([]);
-  
+  const [choosenPokemon, setChoosenPokemon] = useState(true);
+  const [selectedPokemon, setSelectedPokemon] = useState(null);
+
+  const handlePokemonSelect = (pokemon) => {
+    setSelectedPokemon(pokemon);
+  };
+
   useEffect(() => {
     const readAPIUserSprite = async () => {
       const promises = initialPokemonList.map(async (pokemon) => {
@@ -102,6 +106,7 @@ function App() {
         </div>
       ) : (areaCondition ? (
           <div>
+            <h3>Your opponent is:</h3>
             <Sprite svg={dataPokemon}
               name={dataPokemonName}
               click={() => {
@@ -110,10 +115,23 @@ function App() {
             />
             <div>
               <h3>Choose your fighter:</h3>
-            {finalPokemonList.map((pokemon, index) => (
-                <UserPokemons svg={pokemon.svg}
-                  name={pokemon.name} />
-            ))}
+              {choosenPokemon ? (
+                finalPokemonList.map((pokemon, index) => (
+                    <UserPokemons svg={pokemon.svg}
+                      name={pokemon.name} click={() => {
+                        setChoosenPokemon(false);
+                      }} />
+                  ))
+              ) : (
+                  <Sprite svg={finalPokemonList[0].svg}
+                    name={finalPokemonList[0].name}
+                    click={() => {
+                      setChoosenPokemon(true);
+                    }}
+                  />
+              )
+              }
+            
               </div>
           </div>)
         :
