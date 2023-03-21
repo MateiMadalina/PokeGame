@@ -4,7 +4,7 @@ const Sprite = (props) => {
   const name = props.name
   const click = props.click;
   return (<div>
-    <h3>Your opponent is:</h3>
+    
     <h3>{name}</h3>
     <img src={svg} />
     <button onClick={click}>Back</button>
