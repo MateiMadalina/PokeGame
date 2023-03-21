@@ -36,8 +36,8 @@ function App() {
   const readAPISprite = async (sprite) => {
     const response = await fetch(`${sprite}`);
     const data = await response.json();
-    const svg = data.sprites["front_default"];
-    //  const svg = data.sprite.other["dream_world"]["front_default"];
+    console.log(data);
+     const svg = data.sprites.other["dream_world"]["front_default"];
     // console.log(data.sprites["front_default"]);
 
     // console.log(data["sprite"]["other"]["dream_world"]["front_default"]);
