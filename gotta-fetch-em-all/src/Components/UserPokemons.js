@@ -1,9 +1,8 @@
-const UsersPokemons = (props) => {
+const UserPokemons = (props) => {
     const svg = props.svg;
     const name = props.name
     return (
         <div>
-        <h3>Choose your fighter:</h3>
         <button>
                 <h3>{name}</h3>
                 <img src={svg} />
@@ -12,4 +11,4 @@ const UsersPokemons = (props) => {
     );
 }
 
-export default UsersPokemons;
+export default UserPokemons;
