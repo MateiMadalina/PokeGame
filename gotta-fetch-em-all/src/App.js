@@ -34,12 +34,9 @@ function App() {
   const readAPIPokemons = async (url) => {
     const response = await fetch(`${url}`);
     const data = await response.json();
-    // console.log(data.pokemon_encounters);
     let rand = Math.floor(Math.random() * data.pokemon_encounters.length);
     let URLPokemon = data.pokemon_encounters[rand].pokemon.url;
-    // console.log(URLPokemon);
     readAPISprite(URLPokemon);
-    //setDataPokemon(data.pokemon_encounters[rand].pokemon.url);
   };
 
   const readAPISprite = async (sprite) => {
@@ -89,7 +86,8 @@ function App() {
           (<div>
             <h3>There are no pokemon in this area.</h3>
             <button onClick={() => {
-            handlePress(true)
+            handlePress(true);
+            setAreaCondition(true);
             }}>Back</button>
           </div>)
       )}
