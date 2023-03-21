@@ -119,7 +119,7 @@ function App() {
         </div>
       ) : (areaCondition ? (
           <div>
-            <h3>Your opponent is:</h3>
+            <h2>Your opponent is:</h2>
             <Sprite svg={dataPokemon}
               name={dataPokemonName}
               click={() => {
@@ -131,17 +131,21 @@ function App() {
             <div>
               {choosenPokemon ? (
                 <div>
-                <h3>Choose your fighter:</h3>
+                <h2>Choose your fighter:</h2>
+                <div id="myPokemons">
                 {
                   finalPokemonList.map((pokemon, index) => (
-                    <UserPokemons svg={pokemon.svg}
-                      name={pokemon.name} click={() => {
+                       <UserPokemons
+                        svg={pokemon.svg}
+                        name={pokemon.name} click={() => {
                         setChoosenPokemon(false);
                         setSelectedPokemon(pokemon);
                         handleAbilityChoosenPlayer(pokemon);
-                      }} />
-                  ))
-                  }
+                      }}
+                      />
+                      ))
+                    }
+                </div> 
                   </div>
               ) : (
                   <div>
