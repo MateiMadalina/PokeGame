@@ -80,13 +80,18 @@ function App() {
             ))}
         </div>
       ) : (areaCondition ? (
-          <Sprite svg={dataPokemon}
-            name={dataPokemonName}
-            click={() => {
-              handlePress(true)
-            }} /> )
-      :
-      (<div>There are no pokemon in this area</div>)
+        <Sprite svg={dataPokemon}
+          name={dataPokemonName}
+          click={() => {
+            handlePress(true)
+          }} />)
+        :
+          (<div>
+            <h3>There are no pokemon in this area.</h3>
+            <button onClick={() => {
+            handlePress(true)
+            }}>Back</button>
+          </div>)
       )}
     </div>
   );
