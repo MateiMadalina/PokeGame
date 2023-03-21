@@ -2,7 +2,7 @@ import "./App.css";
 import { useState, useEffect } from "react";
 import DisplayLocations from "./Components/DisplayLocations";
 import Sprite from "./Components/Sprite";
-// import UsersPokemons from "./Components/UserPokemons";
+import UserPokemons from "./Components/UserPokemons";
 
 function App() {
   const [dataLocation, setDataLocation] = useState(null);
@@ -66,7 +66,6 @@ function App() {
   const readAPISprite = async (sprite) => {
     const response = await fetch(`${sprite}`);
     const data = await response.json();
-    console.log(data);
     const svg = data.sprites.other["dream_world"]["front_default"];
     setDataPokemon(svg);
     const name = data.species.name.split("")
@@ -75,17 +74,6 @@ function App() {
     setDataPokemonName(name);
   };
 
-  // const readAPIUserSprite = async (sprite) => {
-  //   const response = await fetch(`${sprite}`);
-  //   const data = await response.json();
-  //   console.log(data);
-  //   const svg = data.sprites.other["dream_world"]["front_default"];
-  //   setDataUserPokemon(svg);
-  //   const name = data.species.name.split("")
-  //   name[0] = name[0].toUpperCase();
-  //   name.join("");
-  //   setDataUserPokemonName(name);
-  // };
 
   useEffect(() => {
     readAPILocations();
@@ -120,12 +108,13 @@ function App() {
                 handlePress(true)
               }}
             />
-            {/* {usersPokemonList.map((pokemon, index) => (
-              <div key={index}>
-                <UsersPokemons svg={dataUserPokemon}
-                  name={dataUserPokemonName} />
+            <div>
+              <h3>Choose your fighter:</h3>
+            {finalPokemonList.map((pokemon, index) => (
+                <UserPokemons svg={pokemon.svg}
+                  name={pokemon.name} />
+            ))}
               </div>
-            ))} */}
           </div>)
         :
           (<div>
