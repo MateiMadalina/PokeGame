@@ -16,10 +16,9 @@ function App() {
   const [finalPokemonList, setFinalPokemonList] = useState([]);
   const [choosenPokemon, setChoosenPokemon] = useState(true);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
-
-  const handlePokemonSelect = (pokemon) => {
-    setSelectedPokemon(pokemon);
-  };
+  const [pcFighter, setPcFighter] = useState(null);
+  console.log(pcFighter)
+  const [myFighter, setMyFighter] = useState(null)
 
   useEffect(() => {
     const readAPIUserSprite = async () => {
@@ -76,9 +75,21 @@ function App() {
     name[0] = name[0].toUpperCase();
     name.join("");
     setDataPokemonName(name);
+    handleAbilities(data.stats[1].base_stat, data.stats[2].base_stat)
+    setPcFighter({
+      "attack": data.stats[1].base_stat,
+      "defense": data.stats[2].base_stat,
+      "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
+    })
+    
+    // setPcFighter.attack = data.stats[1].base_stat;
+    // setPcFighter.defense = data.stats[2].base_stat;
   };
 
-
+  const handleAbilities = (attack, defence) => {
+    setPcFighter.attack = attack;
+    setPcFighter.defense = defence;
+  }
   useEffect(() => {
     readAPILocations();
   }, []);
@@ -114,24 +125,34 @@ function App() {
               }}
             />
             <div>
-              <h3>Choose your fighter:</h3>
               {choosenPokemon ? (
-                finalPokemonList.map((pokemon, index) => (
+                <div>
+                <h3>Choose your fighter:</h3>
+                {
+                  finalPokemonList.map((pokemon, index) => (
                     <UserPokemons svg={pokemon.svg}
-                      name={pokemon.name} click={() => {
+                      name={pokemon.name} click={(e) => {
                         setChoosenPokemon(false);
+                        setSelectedPokemon(pokemon)
+                        setMyFighter({
+                          
+                        })
                       }} />
                   ))
+                  }
+                  </div>
               ) : (
-                  <Sprite svg={finalPokemonList[0].svg}
-                    name={finalPokemonList[0].name}
+                  <div>
+                    <h3>Your fighter is:</h3>
+                  <Sprite svg={selectedPokemon.svg}
+                    name={selectedPokemon.name}
                     click={() => {
                       setChoosenPokemon(true);
                     }}
-                  />
+                    />
+                    </div>
               )
               }
-            
               </div>
           </div>)
         :
