@@ -29,7 +29,7 @@ function App() {
         const svg = data.sprites.other["dream_world"]["front_default"];
         const name = data.species.name.split("")
         name[0] = name[0].toUpperCase();
-        const pokemonDetails = { "name": name.join(""), "svg": svg,"attack": data.stats[1].base_stat, "defense": data.stats[2].base_stat, "random": Math.floor(Math.random() * (255 - 217 + 1) + 217) }
+        const pokemonDetails = { "name": name.join(""), "svg": svg,"hp":data.stats[0].base_stat,"attack": data.stats[1].base_stat, "defense": data.stats[2].base_stat, "random": Math.floor(Math.random() * (255 - 217 + 1) + 217) }
         return pokemonDetails
       });
       const pokemonDetails = await Promise.all(promises);
@@ -77,6 +77,7 @@ function App() {
     name.join("");
     setDataPokemonName(name);
     setPcFighter({
+      "hp":data.stats[0].base_stat,
       "attack": data.stats[1].base_stat,
       "defense": data.stats[2].base_stat,
       "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
@@ -123,6 +124,8 @@ function App() {
               name={dataPokemonName}
               click={() => {
                 handlePress(true)
+                setChoosenPokemon(true);
+
               }}
             />
             <div>
