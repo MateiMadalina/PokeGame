@@ -18,7 +18,8 @@ function App() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [pcFighter, setPcFighter] = useState(null);
   console.log(pcFighter)
-  const [myFighter, setMyFighter] = useState(null)
+  const [myFighter, setMyFighter] = useState(null);
+  console.log(myFighter);
 
   useEffect(() => {
     const readAPIUserSprite = async () => {
@@ -28,7 +29,7 @@ function App() {
         const svg = data.sprites.other["dream_world"]["front_default"];
         const name = data.species.name.split("")
         name[0] = name[0].toUpperCase();
-        const pokemonDetails = { "name": name.join(""), "svg": svg }
+        const pokemonDetails = { "name": name.join(""), "svg": svg,"attack": data.stats[1].base_stat, "defense": data.stats[2].base_stat, "random": Math.floor(Math.random() * (255 - 217 + 1) + 217) }
         return pokemonDetails
       });
       const pokemonDetails = await Promise.all(promises);
@@ -75,21 +76,13 @@ function App() {
     name[0] = name[0].toUpperCase();
     name.join("");
     setDataPokemonName(name);
-    handleAbilities(data.stats[1].base_stat, data.stats[2].base_stat)
     setPcFighter({
       "attack": data.stats[1].base_stat,
       "defense": data.stats[2].base_stat,
       "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
     })
-    
-    // setPcFighter.attack = data.stats[1].base_stat;
-    // setPcFighter.defense = data.stats[2].base_stat;
   };
 
-  const handleAbilities = (attack, defence) => {
-    setPcFighter.attack = attack;
-    setPcFighter.defense = defence;
-  }
   useEffect(() => {
     readAPILocations();
   }, []);
@@ -97,6 +90,14 @@ function App() {
   const handlePress = (param) => {
     setPresArea(param);
   };
+
+  const handleAbilityChoosenPlayer = (details) => {
+    setMyFighter({
+      "attack": details.attack,
+      "defense": details.defense,
+      "random": details.random
+    })
+  }
 
   return (
     <div className="App">
@@ -131,12 +132,10 @@ function App() {
                 {
                   finalPokemonList.map((pokemon, index) => (
                     <UserPokemons svg={pokemon.svg}
-                      name={pokemon.name} click={(e) => {
+                      name={pokemon.name} click={() => {
                         setChoosenPokemon(false);
-                        setSelectedPokemon(pokemon)
-                        setMyFighter({
-                          
-                        })
+                        setSelectedPokemon(pokemon);
+                        handleAbilityChoosenPlayer(pokemon);
                       }} />
                   ))
                   }
