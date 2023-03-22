@@ -4,10 +4,13 @@ const UserPokemons = (props) => {
     const click = props.click;
     return (
         <div>
-        <button onClick={click}>
-                <h3>{name}</h3>
+            <div>
+                <h4>{name}</h4>
                 <img src={svg} />
-        </button>
+            </div>
+            <button onClick={click}>
+                This one
+            </button>
         </div>
     );
 }
