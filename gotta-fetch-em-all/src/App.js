@@ -18,7 +18,8 @@ function App() {
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [pcFighter, setPcFighter] = useState(null);
   console.log(pcFighter)
-  const [myFighter, setMyFighter] = useState(null)
+  const [myFighter, setMyFighter] = useState(null);
+  console.log(myFighter);
 
   useEffect(() => {
     const readAPIUserSprite = async () => {
@@ -28,7 +29,7 @@ function App() {
         const svg = data.sprites.other["dream_world"]["front_default"];
         const name = data.species.name.split("")
         name[0] = name[0].toUpperCase();
-        const pokemonDetails = { "name": name.join(""), "svg": svg }
+        const pokemonDetails = { "name": name.join(""), "svg": svg,"hp":data.stats[0].base_stat,"attack": data.stats[1].base_stat, "defense": data.stats[2].base_stat, "random": Math.floor(Math.random() * (255 - 217 + 1) + 217) }
         return pokemonDetails
       });
       const pokemonDetails = await Promise.all(promises);
@@ -75,21 +76,14 @@ function App() {
     name[0] = name[0].toUpperCase();
     name.join("");
     setDataPokemonName(name);
-    handleAbilities(data.stats[1].base_stat, data.stats[2].base_stat)
     setPcFighter({
+      "hp":data.stats[0].base_stat,
       "attack": data.stats[1].base_stat,
       "defense": data.stats[2].base_stat,
       "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
     })
-    
-    // setPcFighter.attack = data.stats[1].base_stat;
-    // setPcFighter.defense = data.stats[2].base_stat;
   };
 
-  const handleAbilities = (attack, defence) => {
-    setPcFighter.attack = attack;
-    setPcFighter.defense = defence;
-  }
   useEffect(() => {
     readAPILocations();
   }, []);
@@ -97,6 +91,15 @@ function App() {
   const handlePress = (param) => {
     setPresArea(param);
   };
+
+  const handleAbilityChoosenPlayer = (details) => {
+    setMyFighter({
+      "hp": details.hp,
+      "attack": details.attack,
+      "defense": details.defense,
+      "random": details.random
+    })
+  }
 
   return (
     <div className="App">
@@ -117,36 +120,42 @@ function App() {
         </div>
       ) : (areaCondition ? (
           <div>
-            <h3>Your opponent is:</h3>
+            <h2>Your opponent is:</h2>
             <Sprite svg={dataPokemon}
               name={dataPokemonName}
+              buttonName="Choose another area"
               click={() => {
                 handlePress(true)
+                setChoosenPokemon(true);
+
               }}
             />
             <div>
               {choosenPokemon ? (
                 <div>
-                <h3>Choose your fighter:</h3>
+                <h2>Choose your fighter:</h2>
+                <div id="myPokemons">
                 {
                   finalPokemonList.map((pokemon, index) => (
-                    <UserPokemons svg={pokemon.svg}
-                      name={pokemon.name} click={(e) => {
+                       <UserPokemons
+                        svg={pokemon.svg}
+                        name={pokemon.name} click={() => {
                         setChoosenPokemon(false);
-                        setSelectedPokemon(pokemon)
-                        setMyFighter({
-                          
-                        })
-                      }} />
-                  ))
-                  }
+                        setSelectedPokemon(pokemon);
+                        handleAbilityChoosenPlayer(pokemon);
+                      }}
+                      />
+                      ))
+                    }
+                </div> 
                   </div>
               ) : (
                   <div>
                     <h3>Your fighter is:</h3>
                   <Sprite svg={selectedPokemon.svg}
                     name={selectedPokemon.name}
-                    click={() => {
+                      buttonName="Choose another fighter"
+                      click={() => {
                       setChoosenPokemon(true);
                     }}
                     />
