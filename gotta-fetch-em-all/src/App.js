@@ -10,51 +10,47 @@ function App() {
   const [presArea, setPresArea] = useState(true);
   const [dataPokemonName, setDataPokemonName] = useState(null);
   const [areaCondition, setAreaCondition] = useState(true);
-  const [initialPokemonList, setInitialPokemonList] = useState(["https://pokeapi.co/api/v2/pokemon/bulbasaur",
+  const [initialPokemonList, setInitialPokemonList] = useState([
     "https://pokeapi.co/api/v2/pokemon/charizard",
+    "https://pokeapi.co/api/v2/pokemon/pikachu",
     "https://pokeapi.co/api/v2/pokemon/poliwhirl"]);
   const [finalPokemonList, setFinalPokemonList] = useState([]);
   const [choosenPokemon, setChoosenPokemon] = useState(true);
   const [selectedPokemon, setSelectedPokemon] = useState(null);
   const [pcFighter, setPcFighter] = useState(null);
-  console.log(pcFighter)
   const [myFighter, setMyFighter] = useState(null);
-  console.log(myFighter);
-  // const [pcDamage, setPcDamage] = useState(null);
-  let i = 0;
+  const [playerHP, setPlayerHp] = useState(null);
+  const [pcHp, setPcHp] = useState(null);
 
-  
+
+  const readAPIUserSprite = async () => {
+    const promises = initialPokemonList.map(async (pokemon) => {
+      const response = await fetch(`${pokemon}`);
+      const data = await response.json();
+      const svg = data.sprites.other["dream_world"]["front_default"];
+      const name = data.species.name.split("")
+      name[0] = name[0].toUpperCase();
+      const pokemonDetails = {
+        "name": name.join(""),
+        "svg": svg,
+        "hp": data.stats[0].base_stat,
+        "attack": data.stats[1].base_stat,
+        "defense": data.stats[2].base_stat,
+        "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
+      }
+      return pokemonDetails
+    });
+    const pokemonDetails = await Promise.all(promises);
+    setFinalPokemonList(pokemonDetails);
+  };
+
   useEffect(() => {
-    const readAPIUserSprite = async () => {
-      const promises = initialPokemonList.map(async (pokemon) => {
-        const response = await fetch(`${pokemon}`);
-        const data = await response.json();
-        console.log(data)
-        const svg = data.sprites.other["dream_world"]["front_default"];
-        const name = data.species.name.split("")
-        name[0] = name[0].toUpperCase();
-        const pokemonDetails = {
-          "name": name.join(""),
-          "svg": svg,
-          "hp": data.stats[0].base_stat,
-          "attack": data.stats[1].base_stat,
-          "defense": data.stats[2].base_stat,
-          "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
-        }
-        console.log(pokemonDetails)
-        console.log("My pokemon" + pokemonDetails.attack)
-        return pokemonDetails
-      });
-      const pokemonDetails = await Promise.all(promises);
-      setFinalPokemonList(pokemonDetails);
-    };
     readAPIUserSprite();
   }, []);
 
   const readAPILocations = async () => {
     const response = await fetch("https://pokeapi.co/api/v2/location");
     const data = await response.json();
-    console.log(data)
     if (data.results) {
       setDataLocation(data.results);
     } else {
@@ -65,7 +61,6 @@ function App() {
   const readAPILocation = async (link) => {
     const response = await fetch(`${link}`);
     const data = await response.json();
-    console.log(data)
     if (data.areas.length > 0) {
       const pokemonAreas = data.areas[0].url;
       readAPIPokemons(pokemonAreas);
@@ -77,7 +72,6 @@ function App() {
   const readAPIPokemons = async (url) => {
     const response = await fetch(`${url}`);
     const data = await response.json();
-    console.log(data)
     let rand = Math.floor(Math.random() * data.pokemon_encounters.length);
     let URLPokemon = data.pokemon_encounters[rand].pokemon.url;
     readAPISprite(URLPokemon);
@@ -86,7 +80,6 @@ function App() {
   const readAPISprite = async (sprite) => {
     const response = await fetch(`${sprite}`);
     const data = await response.json();
-    console.log(data)
     const svg = data.sprites.other["dream_world"]["front_default"];
     setDataPokemon(svg);
     const name = data.species.name.split("")
@@ -132,25 +125,36 @@ function App() {
 
       if (playerTurn) {
         pc.hp -= myTotal;
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log(`You hit! Your opponent's health is now ${pc.hp}`);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        setPcHp(`Health: ${pc.hp}`)
       } else {
         my.hp -= pcTotal;
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log(`Your opponent hit! Your health is now ${my.hp}`);
+        await new Promise(resolve => setTimeout(resolve, 500));
+        setPlayerHp(`Health: ${my.hp}`);
       }
 
       playerTurn = !playerTurn;
     }
 
     if (pc.hp <= 0 && my.hp >= 0) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("You won!");
+      setPlayerHp("You won!")
+      await new Promise(resolve => setTimeout(resolve, 5000));
       initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`)
+      readAPIUserSprite();
+      handlePress(true);
+      setChoosenPokemon(true);
+      setPlayerHp("");
+      setPcHp("");
       
     } else if (pc.hp >= 0 && my.hp <= 0) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("You lost!");
+      setPlayerHp("You lost!")
+      await new Promise(resolve => setTimeout(resolve, 5000));
+      handlePress(true);
+      setChoosenPokemon(true);
+      setPlayerHp("");
+      setPcHp("");
     }
   }
 
@@ -177,10 +181,10 @@ function App() {
             <Sprite svg={dataPokemon}
               name={dataPokemonName}
               buttonName="Choose another area"
+              hp={pcHp}
               click={() => {
                 handlePress(true)
                 setChoosenPokemon(true);
-
               }}
             />
             <div>
@@ -208,8 +212,9 @@ function App() {
                     <h3>Your fighter is:</h3>
                   <Sprite svg={selectedPokemon.svg}
                     name={selectedPokemon.name}
-                      buttonName="Choose another fighter"
-                      click={() => {
+                    buttonName="Choose another fighter"
+                    hp={playerHP}
+                    click={() => {
                       setChoosenPokemon(true);
                     }}
                     />
