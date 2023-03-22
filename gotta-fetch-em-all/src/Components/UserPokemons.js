@@ -4,7 +4,7 @@ const UserPokemons = (props) => {
     const click = props.click;
     return (
         <div>
-            <div>
+            <div className="card">
                 <h4>{name}</h4>
                 <img src={svg} />
             </div>
