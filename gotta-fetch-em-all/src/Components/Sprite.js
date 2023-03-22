@@ -11,7 +11,7 @@ const Sprite = (props) => {
         <h5>{hp}</h5>
         <img src={svg} />
       </div>
-      <button onClick={click}>{buttonName}</button>
+      <button className="btnBack" onClick={click}>{buttonName}</button>
     </div>
   );
 };
