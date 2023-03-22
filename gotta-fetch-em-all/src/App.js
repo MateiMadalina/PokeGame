@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import DisplayLocations from "./Components/DisplayLocations";
 import Sprite from "./Components/Sprite";
 import UserPokemons from "./Components/UserPokemons";
+import ProgressBar from "./Components/ProgressBar";
 
 function App() {
   const [dataLocation, setDataLocation] = useState(null);
@@ -21,25 +22,26 @@ function App() {
   const [pcFighter, setPcFighter] = useState(null);
   const [myFighter, setMyFighter] = useState(null);
   const [playerHP, setPlayerHp] = useState(null);
-  const [pcHp, setPcHp] = useState(null);
-
+  const [computerHP, setComputerHP] = useState(null);
+  const [pcHp, setPcHp] = useState(100);
+  const [myHp, setMyHp] = useState(100);
 
   const readAPIUserSprite = async () => {
     const promises = initialPokemonList.map(async (pokemon) => {
       const response = await fetch(`${pokemon}`);
       const data = await response.json();
       const svg = data.sprites.other["dream_world"]["front_default"];
-      const name = data.species.name.split("")
+      const name = data.species.name.split("");
       name[0] = name[0].toUpperCase();
       const pokemonDetails = {
-        "name": name.join(""),
-        "svg": svg,
-        "hp": data.stats[0].base_stat,
-        "attack": data.stats[1].base_stat,
-        "defense": data.stats[2].base_stat,
-        "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
-      }
-      return pokemonDetails
+        name: name.join(""),
+        svg: svg,
+        hp: data.stats[0].base_stat,
+        attack: data.stats[1].base_stat,
+        defense: data.stats[2].base_stat,
+        random: Math.floor(Math.random() * (255 - 217 + 1) + 217),
+      };
+      return pokemonDetails;
     });
     const pokemonDetails = await Promise.all(promises);
     setFinalPokemonList(pokemonDetails);
@@ -55,7 +57,7 @@ function App() {
     if (data.results) {
       setDataLocation(data.results);
     } else {
-      console.log("No results")
+      console.log("No results");
     }
   };
 
@@ -66,7 +68,7 @@ function App() {
       const pokemonAreas = data.areas[0].url;
       readAPIPokemons(pokemonAreas);
     } else {
-      setAreaCondition(false)
+      setAreaCondition(false);
     }
   };
 
@@ -83,17 +85,17 @@ function App() {
     const data = await response.json();
     const svg = data.sprites.other["dream_world"]["front_default"];
     setDataPokemon(svg);
-    const name = data.species.name.split("")
+    const name = data.species.name.split("");
     name[0] = name[0].toUpperCase();
     name.join("");
     setDataPokemonName(name);
     setPcFighter({
-      "name": data.species.name,
-      "hp":data.stats[0].base_stat,
-      "attack": data.stats[1].base_stat,
-      "defense": data.stats[2].base_stat,
-      "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
-    })
+      name: data.species.name,
+      hp: data.stats[0].base_stat,
+      attack: data.stats[1].base_stat,
+      defense: data.stats[2].base_stat,
+      random: Math.floor(Math.random() * (255 - 217 + 1) + 217),
+    });
   };
 
   useEffect(() => {
@@ -106,17 +108,17 @@ function App() {
 
   const handleAbilityChoosenPlayer = (details) => {
     setMyFighter({
-      "hp": details.hp,
-      "attack": details.attack,
-      "defense": details.defense,
-      "random": details.random
-    })
-  }
+      hp: details.hp,
+      attack: details.attack,
+      defense: details.defense,
+      random: details.random,
+    });
+  };
 
   const formula = (B, D, Z) => {
-    return ((((2 / 5 + 2) * B * 60 / D) / 50) + 2) * Z / 255
-  }
-  
+    return ((((2 / 5 + 2) * B * 60) / D / 50 + 2) * Z) / 255;
+  };
+
   const handleFight = async (pc, my) => {
     let playerTurn = true;
 
@@ -126,12 +128,14 @@ function App() {
 
       if (playerTurn) {
         pc.hp -= myTotal;
-        await new Promise(resolve => setTimeout(resolve, 500));
-        setPcHp(`Health: ${pc.hp}`)
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        setComputerHP(`Health: ${pc.hp}`);
+        setPcHp(pc.hp);
       } else {
         my.hp -= pcTotal;
-        await new Promise(resolve => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 500));
         setPlayerHp(`Health: ${my.hp}`);
+        setMyHp(my.hp);
       }
 
       playerTurn = !playerTurn;
@@ -139,25 +143,28 @@ function App() {
 
     if (pc.hp <= 0 && my.hp >= 0) {
       console.log("You won!");
-      setPlayerHp("You won!")
-      await new Promise(resolve => setTimeout(resolve, 5000));
-      initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`)
+      setPlayerHp("You won!");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+      initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`);
       readAPIUserSprite();
       handlePress(true);
       setChoosenPokemon(true);
       setPlayerHp("");
-      setPcHp("");
-      
+      setComputerHP("");
+      setMyHp(100);
+      setPcHp(100);
     } else if (pc.hp >= 0 && my.hp <= 0) {
       console.log("You lost!");
-      setPlayerHp("You lost!")
-      await new Promise(resolve => setTimeout(resolve, 5000));
+      setPlayerHp("You lost!");
+      await new Promise((resolve) => setTimeout(resolve, 5000));
       handlePress(true);
       setChoosenPokemon(true);
       setPlayerHp("");
-      setPcHp("");
+      setComputerHP("");
+      setMyHp(100);
+      setPcHp(100);
     }
-  }
+  };
 
   return (
     <div className="App">
@@ -176,64 +183,77 @@ function App() {
               />
             ))}
         </div>
-      ) : (areaCondition ? (
-          <div id="all">
-            <div id="PokemonPC">
-              <h2>Your opponent is:</h2>
-              <Sprite svg={dataPokemon}
-                name={dataPokemonName}
-                buttonName="Choose another area"
-                hp={pcHp}
-                click={() => {
-                  handlePress(true)
-                  setChoosenPokemon(true);
-                }}
-                />
-             </div>   
-            <div id="PokemonPlayer">
-              {choosenPokemon ? (
-                <div>
+      ) : areaCondition ? (
+        <div id="all">
+          <div id="PokemonPC">
+            <h2>Your opponent is:</h2>
+            <ProgressBar value={pcHp} max={100} />
+            <Sprite
+              svg={dataPokemon}
+              name={dataPokemonName}
+              buttonName="Choose another area"
+              hp={computerHP}
+              click={() => {
+                handlePress(true);
+                setChoosenPokemon(true);
+              }}
+            />
+          </div>
+          <div id="PokemonPlayer">
+            {choosenPokemon ? (
+              <div>
                 <h2>Choose your fighter:</h2>
                 <div id="myPokemons">
-                {
-                  finalPokemonList.map((pokemon, index) => (
+                  {finalPokemonList.map((pokemon, index) => (
                     <UserPokemons
-                        svg={pokemon.svg}
-                        name={pokemon.name} click={() => {
+                      svg={pokemon.svg}
+                      name={pokemon.name}
+                      click={() => {
                         setChoosenPokemon(false);
                         setSelectedPokemon(pokemon);
                         handleAbilityChoosenPlayer(pokemon);
                       }}
-                      />
-                      ))
-                    }
-                </div> 
-                  </div>
-              ) : (
-                  <div>
-                    <h3>Your fighter is:</h3>
-                  <Sprite svg={selectedPokemon.svg}
-                    name={selectedPokemon.name}
-                    buttonName="Choose another fighter"
-                    hp={playerHP}
-                    click={() => {
-                      setChoosenPokemon(true);
-                    }}
                     />
-                     <button id="btnFight" onClick={() => { handleFight(pcFighter, myFighter) }}>Fight</button>
-                  </div>
-              )
-              }
-            </div>
-          </div>)
-        :
-          (<div>
-            <h3>There are no pokemon in this area.</h3>
-            <button onClick={() => {
-            handlePress(true);
-            setAreaCondition(true);
-            }}>Back</button>
-          </div>)
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div>
+                <h3>Your fighter is:</h3>
+                <ProgressBar value={myHp} max={100} />
+                <Sprite
+                  svg={selectedPokemon.svg}
+                  name={selectedPokemon.name}
+                  buttonName="Choose another fighter"
+                  hp={playerHP}
+                  click={() => {
+                    setChoosenPokemon(true);
+                  }}
+                />
+                <button
+                  id="btnFight"
+                  onClick={() => {
+                    handleFight(pcFighter, myFighter);
+                  }}
+                >
+                  Fight
+                </button>
+              </div>
+            )}
+          </div>
+        </div>
+      ) : (
+        <div>
+          <h3>There are no pokemon in this area.</h3>
+          <button
+            onClick={() => {
+              handlePress(true);
+              setAreaCondition(true);
+            }}
+          >
+            Back
+          </button>
+        </div>
       )}
     </div>
   );
