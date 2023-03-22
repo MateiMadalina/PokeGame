@@ -219,3 +219,7 @@ img {
 .location {
   box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
 }
+
+.progressBar{
+  width: 250px;
+}
