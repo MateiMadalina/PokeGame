@@ -6,7 +6,9 @@ const DisplayLocations = (props) => {
 
   return (
     <div>
-      <button onClick={handleClick}>{props.name}</button>
+      <button className="locations" onClick={handleClick}>
+        {props.name}
+      </button>
     </div>
   );
 };
