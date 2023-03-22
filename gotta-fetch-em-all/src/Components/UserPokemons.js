@@ -8,7 +8,7 @@ const UserPokemons = (props) => {
                 <h4>{name}</h4>
                 <img src={svg} />
             </div>
-            <button onClick={click}>
+            <button className="btnBack" onClick={click}>
                 This one
             </button>
         </div>

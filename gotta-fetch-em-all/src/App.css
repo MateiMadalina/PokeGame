@@ -118,6 +118,8 @@ img{
 
 
 .btnBack{
+  margin-top: 10px;
+  margin-bottom: 10px;
   align-items: center;
   appearance: none;
   background-color: #fff;
