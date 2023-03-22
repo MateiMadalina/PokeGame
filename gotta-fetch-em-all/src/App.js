@@ -94,6 +94,7 @@ function App() {
 
   const handleAbilityChoosenPlayer = (details) => {
     setMyFighter({
+      "hp": details.hp,
       "attack": details.attack,
       "defense": details.defense,
       "random": details.random
@@ -122,6 +123,7 @@ function App() {
             <h2>Your opponent is:</h2>
             <Sprite svg={dataPokemon}
               name={dataPokemonName}
+              buttonName="Choose another area"
               click={() => {
                 handlePress(true)
                 setChoosenPokemon(true);
@@ -152,7 +154,8 @@ function App() {
                     <h3>Your fighter is:</h3>
                   <Sprite svg={selectedPokemon.svg}
                     name={selectedPokemon.name}
-                    click={() => {
+                      buttonName="Choose another fighter"
+                      click={() => {
                       setChoosenPokemon(true);
                     }}
                     />
