@@ -13,9 +13,6 @@ function App() {
   const [initialPokemonList, setInitialPokemonList] = useState([
     "https://pokeapi.co/api/v2/pokemon/charizard",
     "https://pokeapi.co/api/v2/pokemon/pikachu",
-    "https://pokeapi.co/api/v2/pokemon/poliwhirl",
-    "https://pokeapi.co/api/v2/pokemon/charizard",
-    "https://pokeapi.co/api/v2/pokemon/pikachu",
     "https://pokeapi.co/api/v2/pokemon/poliwhirl"
   ]);
   const [finalPokemonList, setFinalPokemonList] = useState([]);
