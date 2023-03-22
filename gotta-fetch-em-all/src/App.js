@@ -10,8 +10,9 @@ function App() {
   const [presArea, setPresArea] = useState(true);
   const [dataPokemonName, setDataPokemonName] = useState(null);
   const [areaCondition, setAreaCondition] = useState(true);
-  const [initialPokemonList, setInitialPokemonList] = useState(["https://pokeapi.co/api/v2/pokemon/bulbasaur",
+  const [initialPokemonList, setInitialPokemonList] = useState([
     "https://pokeapi.co/api/v2/pokemon/charizard",
+    "https://pokeapi.co/api/v2/pokemon/pikachu",
     "https://pokeapi.co/api/v2/pokemon/poliwhirl"]);
   const [finalPokemonList, setFinalPokemonList] = useState([]);
   const [choosenPokemon, setChoosenPokemon] = useState(true);
