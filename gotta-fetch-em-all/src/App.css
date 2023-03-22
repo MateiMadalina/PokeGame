@@ -1,14 +1,13 @@
 .App {
+  height: 100vh;
   display: flex;
   align-items: center;
-  height: 100vh;
-  background-image: url(https://wallup.net/wp-content/uploads/2016/05/24/143432-nature-Pokemon-748x468.jpg);
-  background-repeat: no-repeat;
   flex-direction: column;
   justify-content: center;
   background-size: cover;
-  /* flex-wrap: wrap; */
   text-align: center;
+  background-image: url(https://w0.peakpx.com/wallpaper/513/815/HD-wallpaper-pokemon-pokeball-white-pokemon-gray-grey-simple-white-pokeball.jpg);
+  background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: center;
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
@@ -16,9 +15,8 @@
 
 #myPokemons {
   display: flex;
-      flex-wrap: wrap;
-max-width: 600px;
-  /* flex-direction: column; */
+  flex-wrap: wrap;
+  max-width: 600px;
   align-items: center;
   justify-content: center;
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
@@ -48,6 +46,8 @@ button {
   -webkit-box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.8);
   -moz-box-shadow: 0 1px 6px 1px rgba(0, 0, 0, 0.8);
   font-family: "Righteous", cursive;
+  margin-left: 30px;
+  margin-top: 30px;
 }
 
 #PokemonPC {
@@ -60,8 +60,8 @@ button {
 }
 
 #PokemonPlayer {
-    max-width: 900px;
-      display: flex;
+  max-width: 900px;
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -77,11 +77,11 @@ button {
 
 img {
   width: 100px;
-  /* height: 100px; */
+  height: 100px;
 }
 
 #btnFight {
-  margin-left: -450px;
+  margin-left: -380px;
   align-items: center;
   appearance: none;
   background-color: #fff;
@@ -131,6 +131,7 @@ img {
 .btnBack {
   margin-top: 10px;
   margin-bottom: 10px;
+  margin-left: 30px;
   align-items: center;
   appearance: none;
   background-color: #fff;
@@ -177,8 +178,9 @@ img {
   box-shadow: rgba(72, 95, 199, 0.25) 0 0 0 0.125em;
 }
 
-
 .locations {
+  transform: scale(0.8);
+  margin-bottom: -13px;
   align-self: center;
   background-color: #fff;
   background-image: none;
@@ -188,7 +190,7 @@ img {
   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
   border-style: solid;
   border-width: 2px;
-  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
   box-sizing: border-box;
   color: #41403e;
   cursor: pointer;
@@ -197,7 +199,7 @@ img {
   font-size: 1rem;
   line-height: 23px;
   outline: none;
-  padding: .75rem;
+  padding: 0.75rem;
   text-decoration: none;
   transition: all 235ms ease-in-out;
   border-bottom-left-radius: 15px 255px;
@@ -210,10 +212,10 @@ img {
 }
 
 .location {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
   transform: translate3d(0, 2px, 0);
 }
 
 .location {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
 }
