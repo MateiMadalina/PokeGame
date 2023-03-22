@@ -1,15 +1,24 @@
 .App {
   display: flex;
-  flex-direction: column;
   align-items: center;
+  height: 100vh;
+  background-image: url(https://wallup.net/wp-content/uploads/2016/05/24/143432-nature-Pokemon-748x468.jpg);
+  background-repeat: no-repeat;
+  flex-direction: column;
   justify-content: center;
+  background-size: cover;
+  /* flex-wrap: wrap; */
   text-align: center;
+  background-attachment: fixed;
+  background-position: center;
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
 }
 
 #myPokemons {
   display: flex;
-  flex-direction: column;
+      flex-wrap: wrap;
+max-width: 600px;
+  /* flex-direction: column; */
   align-items: center;
   justify-content: center;
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
@@ -41,7 +50,7 @@ button {
   font-family: "Righteous", cursive;
 }
 
-#PokemonPC{
+#PokemonPC {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -50,45 +59,48 @@ button {
   margin-top: -50px;
 }
 
-#PokemonPlayer{
-  display: flex;
+#PokemonPlayer {
+    max-width: 900px;
+      display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin-left:200px;
+  margin-left: 200px;
 }
 
-#all{
+#all {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-}  
-
-img{
-  width: 200px;
-  height: 200px;
 }
 
-#btnFight{
+img {
+  width: 100px;
+  /* height: 100px; */
+}
+
+#btnFight {
   margin-left: -450px;
   align-items: center;
   appearance: none;
   background-color: #fff;
   border: 1px solid #dbdbdb;
-  border-radius: .375em;
+  border-radius: 0.375em;
   box-shadow: none;
   box-sizing: border-box;
   color: #363636;
   cursor: pointer;
   display: inline-flex;
-  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
   font-size: 1rem;
   font-weight: bold;
   height: 2.5em;
   justify-content: center;
   line-height: 1.5;
-  padding: calc(.5em - 1px) 1em;
+  padding: calc(0.5em - 1px) 1em;
   position: relative;
   text-align: center;
   user-select: none;
@@ -113,30 +125,31 @@ img{
 }
 
 #btnFight:focus:not(:active) {
-  box-shadow: rgba(72, 95, 199, .25) 0 0 0 .125em;
+  box-shadow: rgba(72, 95, 199, 0.25) 0 0 0 0.125em;
 }
 
-
-.btnBack{
+.btnBack {
   margin-top: 10px;
   margin-bottom: 10px;
   align-items: center;
   appearance: none;
   background-color: #fff;
   border: 1px solid #dbdbdb;
-  border-radius: .375em;
+  border-radius: 0.375em;
   box-shadow: none;
   box-sizing: border-box;
   color: #363636;
   cursor: pointer;
   display: inline-flex;
-  font-family: BlinkMacSystemFont,-apple-system,"Segoe UI",Roboto,Oxygen,Ubuntu,Cantarell,"Fira Sans","Droid Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  font-family: BlinkMacSystemFont, -apple-system, "Segoe UI", Roboto, Oxygen,
+    Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", Helvetica,
+    Arial, sans-serif;
   font-size: 1rem;
   font-weight: bold;
   height: 2.5em;
   justify-content: center;
   line-height: 1.5;
-  padding: calc(.5em - 1px) 1em;
+  padding: calc(0.5em - 1px) 1em;
   position: relative;
   text-align: center;
   user-select: none;
@@ -161,5 +174,46 @@ img{
 }
 
 .btnBack:focus:not(:active) {
-  box-shadow: rgba(72, 95, 199, .25) 0 0 0 .125em;
+  box-shadow: rgba(72, 95, 199, 0.25) 0 0 0 0.125em;
+}
+
+
+.locations {
+  align-self: center;
+  background-color: #fff;
+  background-image: none;
+  background-position: 0 90%;
+  background-repeat: repeat no-repeat;
+  background-size: 4px 3px;
+  border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
+  border-style: solid;
+  border-width: 2px;
+  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-sizing: border-box;
+  color: #41403e;
+  cursor: pointer;
+  display: inline-block;
+  font-family: Neucha, sans-serif;
+  font-size: 1rem;
+  line-height: 23px;
+  outline: none;
+  padding: .75rem;
+  text-decoration: none;
+  transition: all 235ms ease-in-out;
+  border-bottom-left-radius: 15px 255px;
+  border-bottom-right-radius: 225px 15px;
+  border-top-left-radius: 255px 15px;
+  border-top-right-radius: 15px 225px;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+}
+
+.location {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  transform: translate3d(0, 2px, 0);
+}
+
+.location {
+  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
 }
