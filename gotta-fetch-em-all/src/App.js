@@ -187,7 +187,9 @@ function App() {
         <div id="all">
           <div id="PokemonPC">
             <h2>Your opponent is:</h2>
+            <div className="progressBar">
             <ProgressBar value={pcHp} max={100} />
+            </div>
             <Sprite
               svg={dataPokemon}
               name={dataPokemonName}
