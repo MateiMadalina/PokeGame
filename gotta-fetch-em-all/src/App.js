@@ -176,18 +176,20 @@ function App() {
             ))}
         </div>
       ) : (areaCondition ? (
-          <div>
-            <h2>Your opponent is:</h2>
-            <Sprite svg={dataPokemon}
-              name={dataPokemonName}
-              buttonName="Choose another area"
-              hp={pcHp}
-              click={() => {
-                handlePress(true)
-                setChoosenPokemon(true);
-              }}
-              />
-            <div>
+          <div id="all">
+            <div id="PokemonPC">
+              <h2>Your opponent is:</h2>
+              <Sprite svg={dataPokemon}
+                name={dataPokemonName}
+                buttonName="Choose another area"
+                hp={pcHp}
+                click={() => {
+                  handlePress(true)
+                  setChoosenPokemon(true);
+                }}
+                />
+             </div>   
+            <div id="PokemonPlayer">
               {choosenPokemon ? (
                 <div>
                 <h2>Choose your fighter:</h2>
@@ -208,7 +210,6 @@ function App() {
                   </div>
               ) : (
                   <div>
-                    <button onClick={() => { handleFight(pcFighter, myFighter) }}>Fight</button>
                     <h3>Your fighter is:</h3>
                   <Sprite svg={selectedPokemon.svg}
                     name={selectedPokemon.name}
@@ -218,10 +219,11 @@ function App() {
                       setChoosenPokemon(true);
                     }}
                     />
-                    </div>
+                     <button id="btnFight" onClick={() => { handleFight(pcFighter, myFighter) }}>Fight</button>
+                  </div>
               )
               }
-              </div>
+            </div>
           </div>)
         :
           (<div>
