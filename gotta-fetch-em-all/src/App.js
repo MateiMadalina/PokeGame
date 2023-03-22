@@ -20,16 +20,27 @@ function App() {
   console.log(pcFighter)
   const [myFighter, setMyFighter] = useState(null);
   console.log(myFighter);
-
+  // const [pcDamage, setPcDamage] = useState(null);
+  let i = 0;
   useEffect(() => {
     const readAPIUserSprite = async () => {
       const promises = initialPokemonList.map(async (pokemon) => {
         const response = await fetch(`${pokemon}`);
         const data = await response.json();
+        console.log(data)
         const svg = data.sprites.other["dream_world"]["front_default"];
         const name = data.species.name.split("")
         name[0] = name[0].toUpperCase();
-        const pokemonDetails = { "name": name.join(""), "svg": svg,"hp":data.stats[0].base_stat,"attack": data.stats[1].base_stat, "defense": data.stats[2].base_stat, "random": Math.floor(Math.random() * (255 - 217 + 1) + 217) }
+        const pokemonDetails = {
+          "name": name.join(""),
+          "svg": svg,
+          "hp": data.stats[0].base_stat,
+          "attack": data.stats[1].base_stat,
+          "defense": data.stats[2].base_stat,
+          "random": Math.floor(Math.random() * (255 - 217 + 1) + 217)
+        }
+        console.log(pokemonDetails)
+        console.log("My pokemon" + pokemonDetails.attack)
         return pokemonDetails
       });
       const pokemonDetails = await Promise.all(promises);
@@ -41,6 +52,7 @@ function App() {
   const readAPILocations = async () => {
     const response = await fetch("https://pokeapi.co/api/v2/location");
     const data = await response.json();
+    console.log(data)
     if (data.results) {
       setDataLocation(data.results);
     } else {
@@ -51,6 +63,7 @@ function App() {
   const readAPILocation = async (link) => {
     const response = await fetch(`${link}`);
     const data = await response.json();
+    console.log(data)
     if (data.areas.length > 0) {
       const pokemonAreas = data.areas[0].url;
       readAPIPokemons(pokemonAreas);
@@ -62,6 +75,7 @@ function App() {
   const readAPIPokemons = async (url) => {
     const response = await fetch(`${url}`);
     const data = await response.json();
+    console.log(data)
     let rand = Math.floor(Math.random() * data.pokemon_encounters.length);
     let URLPokemon = data.pokemon_encounters[rand].pokemon.url;
     readAPISprite(URLPokemon);
@@ -70,6 +84,7 @@ function App() {
   const readAPISprite = async (sprite) => {
     const response = await fetch(`${sprite}`);
     const data = await response.json();
+    console.log(data)
     const svg = data.sprites.other["dream_world"]["front_default"];
     setDataPokemon(svg);
     const name = data.species.name.split("")
@@ -99,6 +114,39 @@ function App() {
       "defense": details.defense,
       "random": details.random
     })
+  }
+
+  const formula = (B, D, Z) => {
+    return ((((2 / 5 + 2) * B * 60 / D) / 50) + 2) * Z / 255
+  }
+  
+  const handleFight = (pc, my) => {
+
+    const pcTotal = formula(pc.attack, pc.defense, pc.random);
+    const myTotal = formula(my.attack, my.defense, my.random);
+  
+    console.log(pcTotal);
+    console.log(myTotal);
+    if (pc.hp > 0 && my.hp > 0) {
+      const pcTotal = formula(pc.attack, pc.defense, pc.random);
+      const myTotal = formula(my.attack, my.defense, my.random);
+
+      if (myTotal > pcTotal) {
+        pc.hp -= myTotal;
+        console.log(`You won! Your opponent's health is now ${pc.hp}`);
+      } else if (myTotal < pcTotal) {
+        my.hp -= (pcTotal - myTotal);
+        console.log(`You lost! Your health is now ${my.hp}`);
+      } else {
+        console.log("It's a tie!");
+      }
+    }
+
+    if (pc.hp <= 0) {
+      console.log("You won!");
+    } else {
+      console.log("You lost!");
+    }
   }
 
   return (
@@ -151,6 +199,7 @@ function App() {
                   </div>
               ) : (
                   <div>
+                    <button onClick={handleFight(pcFighter, myFighter)}>Fight</button>
                     <h3>Your fighter is:</h3>
                   <Sprite svg={selectedPokemon.svg}
                     name={selectedPokemon.name}
