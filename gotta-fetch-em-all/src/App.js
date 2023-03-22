@@ -22,6 +22,8 @@ function App() {
   console.log(myFighter);
   // const [pcDamage, setPcDamage] = useState(null);
   let i = 0;
+
+  
   useEffect(() => {
     const readAPIUserSprite = async () => {
       const promises = initialPokemonList.map(async (pokemon) => {
@@ -92,6 +94,7 @@ function App() {
     name.join("");
     setDataPokemonName(name);
     setPcFighter({
+      "name": data.species.name,
       "hp":data.stats[0].base_stat,
       "attack": data.stats[1].base_stat,
       "defense": data.stats[2].base_stat,
@@ -120,31 +123,33 @@ function App() {
     return ((((2 / 5 + 2) * B * 60 / D) / 50) + 2) * Z / 255
   }
   
-  const handleFight = (pc, my) => {
+  const handleFight = async (pc, my) => {
+    let playerTurn = true;
 
-    const pcTotal = formula(pc.attack, pc.defense, pc.random);
-    const myTotal = formula(my.attack, my.defense, my.random);
-  
-    console.log(pcTotal);
-    console.log(myTotal);
-    if (pc.hp > 0 && my.hp > 0) {
+    while (pc.hp > 0 && my.hp > 0) {
       const pcTotal = formula(pc.attack, pc.defense, pc.random);
       const myTotal = formula(my.attack, my.defense, my.random);
 
-      if (myTotal > pcTotal) {
+      if (playerTurn) {
         pc.hp -= myTotal;
-        console.log(`You won! Your opponent's health is now ${pc.hp}`);
-      } else if (myTotal < pcTotal) {
-        my.hp -= (pcTotal - myTotal);
-        console.log(`You lost! Your health is now ${my.hp}`);
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log(`You hit! Your opponent's health is now ${pc.hp}`);
       } else {
-        console.log("It's a tie!");
+        my.hp -= pcTotal;
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log(`Your opponent hit! Your health is now ${my.hp}`);
       }
+
+      playerTurn = !playerTurn;
     }
 
-    if (pc.hp <= 0) {
+    if (pc.hp <= 0 && my.hp >= 0) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("You won!");
-    } else {
+      initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`)
+      
+    } else if (pc.hp >= 0 && my.hp <= 0) {
+      await new Promise(resolve => setTimeout(resolve, 1000));
       console.log("You lost!");
     }
   }
@@ -199,7 +204,7 @@ function App() {
                   </div>
               ) : (
                   <div>
-                    <button onClick={handleFight(pcFighter, myFighter)}>Fight</button>
+                    <button onClick={() => { handleFight(pcFighter, myFighter) }}>Fight</button>
                     <h3>Your fighter is:</h3>
                   <Sprite svg={selectedPokemon.svg}
                     name={selectedPokemon.name}
