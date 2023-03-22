@@ -186,7 +186,7 @@ function App() {
                 handlePress(true)
                 setChoosenPokemon(true);
               }}
-            />
+              />
             <div>
               {choosenPokemon ? (
                 <div>
@@ -194,7 +194,7 @@ function App() {
                 <div id="myPokemons">
                 {
                   finalPokemonList.map((pokemon, index) => (
-                       <UserPokemons
+                    <UserPokemons
                         svg={pokemon.svg}
                         name={pokemon.name} click={() => {
                         setChoosenPokemon(false);
