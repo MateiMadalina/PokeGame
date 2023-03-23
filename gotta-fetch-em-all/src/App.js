@@ -6,7 +6,7 @@ import UserPokemons from "./Components/UserPokemons";
 import ProgressBar from "./Components/ProgressBar";
 import pin from "./pin.png";
 import Video from "./Components/Video";
-import Untitled from "./Untitled.mp4";
+
 
 function App() {
   const [dataLocation, setDataLocation] = useState(null);
@@ -17,7 +17,7 @@ function App() {
   const [initialPokemonList, setInitialPokemonList] = useState([
     "https://pokeapi.co/api/v2/pokemon/charizard",
     "https://pokeapi.co/api/v2/pokemon/pikachu",
-    "https://pokeapi.co/api/v2/pokemon/poliwhirl"
+    "https://pokeapi.co/api/v2/pokemon/poliwhirl",
   ]);
   const [finalPokemonList, setFinalPokemonList] = useState([]);
   const [choosenPokemon, setChoosenPokemon] = useState(true);
@@ -30,39 +30,10 @@ function App() {
   const [myHp, setMyHp] = useState(100);
   const [startButton, setStartButton] = useState(false);
 
-  const readAPIUserSprite = async () => {
-    const promises = initialPokemonList.map(async (pokemon) => {
-      const response = await fetch(`${pokemon}`);
-      const data = await response.json();
-      const svg = data.sprites.other["dream_world"]["front_default"];
-      const name = data.species.name.split("");
-      name[0] = name[0].toUpperCase();
-      const pokemonDetails = {
-        name: name.join(""),
-        svg: svg,
-        hp: data.stats[0].base_stat,
-        attack: data.stats[1].base_stat,
-        defense: data.stats[2].base_stat,
-        random: Math.floor(Math.random() * (255 - 217 + 1) + 217),
-      };
-      return pokemonDetails;
-    });
-    const pokemonDetails = await Promise.all(promises);
-    setFinalPokemonList(pokemonDetails);
-  };
-
-  useEffect(() => {
-    readAPIUserSprite();
-  }, []);
-
   const readAPILocations = async () => {
     const response = await fetch("https://pokeapi.co/api/v2/location");
     const data = await response.json();
-    if (data.results) {
-      setDataLocation(data.results);
-    } else {
-      console.log("No results");
-    }
+    setDataLocation(data.results);
   };
 
   const readAPILocation = async (link) => {
@@ -104,6 +75,31 @@ function App() {
 
   useEffect(() => {
     readAPILocations();
+  }, []);
+
+  const readAPIUserSprite = async () => {
+    const promises = initialPokemonList.map(async (pokemon) => {
+      const response = await fetch(`${pokemon}`);
+      const data = await response.json();
+      const svg = data.sprites.other["dream_world"]["front_default"];
+      const name = data.species.name.split("");
+      name[0] = name[0].toUpperCase();
+      const pokemonDetails = {
+        name: name.join(""),
+        svg: svg,
+        hp: data.stats[0].base_stat,
+        attack: data.stats[1].base_stat,
+        defense: data.stats[2].base_stat,
+        random: Math.floor(Math.random() * (255 - 217 + 1) + 217),
+      };
+      return pokemonDetails;
+    });
+    const pokemonDetails = await Promise.all(promises);
+    setFinalPokemonList(pokemonDetails);
+  };
+
+  useEffect(() => {
+    readAPIUserSprite();
   }, []);
 
   const handlePress = (param) => {
@@ -150,12 +146,12 @@ function App() {
     }
 
     if (pc.hp <= 0 && my.hp >= 0) {
-      console.log("You won!");
       setPlayerHp("You won!");
       await new Promise((resolve) => setTimeout(resolve, 5000));
-      if (!initialPokemonList.includes(`https://pokeapi.co/api/v2/pokemon/${pc.name}`)) {
+      if (!initialPokemonList.includes(`https://pokeapi.co/api/v2/pokemon/${pc.name}`))
+       {
         initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`);
-      }
+       }
       readAPIUserSprite();
       handlePress(true);
       setChoosenPokemon(true);
@@ -164,10 +160,9 @@ function App() {
       setMyHp(100);
       setPcHp(100);
     } else if (pc.hp >= 0 && my.hp <= 0) {
-      console.log("You lost!");
       setPlayerHp("You lost!");
       await new Promise((resolve) => {
-        setTimeout(resolve, 5000)
+        setTimeout(resolve, 5000);
       });
       handlePress(true);
       setChoosenPokemon(true);
@@ -180,13 +175,16 @@ function App() {
 
   return (
     <div className="App">
-      <Video click={() => {
-        setStartButton(true)
-        document.getElementById("video").style.display = "none";
-      }} />
+      <Video
+        click={() => {
+          setStartButton(true);
+          document.getElementById("video").style.display = "none";
+        }}
+      />
       {startButton ? (
         presArea ? (
-          <div id="allLocations" >
+          <div id="allLocations">
+            <h1>Choose a location</h1>
             {dataLocation &&
               dataLocation.map((location, index) => (
                 <DisplayLocations
@@ -256,17 +254,20 @@ function App() {
                     onClick={() => {
                       handleFight(pcFighter, myFighter);
                     }}
-                  >   
+                  >
                     Fight
-                      </button>
+                  </button>
                 </div>
               )}
             </div>
           </div>
         ) : (
           <div id="noPokemon">
-            <h3 className="textNoPokemon">There are no pokemon in this area.</h3>
-            <button className="textNoPokemon"
+            <h3 className="textNoPokemon">
+              There are no pokemon in this area.
+            </h3>
+            <button
+              className="textNoPokemon"
               onClick={() => {
                 handlePress(true);
                 setAreaCondition(true);
@@ -276,9 +277,8 @@ function App() {
             </button>
           </div>
         )
-      ) : (null)}
+      ) : null}
     </div>
-  )
- 
+  );
 }
-  export default App;
+export default App;

@@ -1,6 +1,6 @@
 const DisplayLocations = (props) => {
   const handleClick = (event) => {
-    event.preventDefault(); // prevent default behavior
+    event.preventDefault();
     props.click();
   };
 

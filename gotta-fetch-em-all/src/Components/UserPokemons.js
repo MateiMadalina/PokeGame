@@ -2,6 +2,7 @@ const UserPokemons = (props) => {
     const svg = props.svg;
     const name = props.name
     const click = props.click;
+
     return (
         <div>
             <div className="card">
