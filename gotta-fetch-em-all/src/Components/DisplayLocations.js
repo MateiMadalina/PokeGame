@@ -6,9 +6,13 @@ const DisplayLocations = (props) => {
 
   return (
     <div>
-      <button className="locations" onClick={handleClick}>
+      <div id={props.id}>
+      <button  className="locations" onClick={handleClick}>
         {props.name}
-      </button>
+      </button><br>
+      </br>
+      <img alt="pin" src={props.logo} aspect={0.5}></img>
+      </div>
     </div>
   );
 };

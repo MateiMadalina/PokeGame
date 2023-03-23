@@ -3,6 +3,7 @@ import React from "react";
 const ProgressBar = ({ value, max }) => {
   const percentage = Math.floor((value / max) * 100);
   const barStyle = {
+    borderRadius: '10px 10px 10px 10px',
     width: `${percentage}%`,
     height: "20px",
     backgroundColor: "#4CAF50",

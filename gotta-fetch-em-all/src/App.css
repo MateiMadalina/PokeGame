@@ -1,4 +1,4 @@
-.App {
+#all{
   height: 100vh;
   display: flex;
   align-items: center;
@@ -13,10 +13,174 @@
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
 }
 
+#allLocations {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-size: cover;
+  text-align: center;
+  background-size: cover;
+  text-align: center;
+  background-size: cover;
+  background-image: url(worldmap.svg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
+}
+
+#noPokemon{
+
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  background-size: cover;
+  text-align: center;
+  background-image: url(https://w0.peakpx.com/wallpaper/513/815/HD-wallpaper-pokemon-pokeball-white-pokemon-gray-grey-simple-white-pokeball.jpg);
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
+}
+
+.textNoPokemon{
+  transform: scale(1.5);
+}
+
+.pin{
+  background-image: url(./pin.png);
+  /* transform: scale(0.8); */
+} 
+
+#canalave-city{
+  position: absolute;
+  top: 30%;
+  left: 56%;
+  width: 130px
+}
+
+#eterna-city{
+  position: absolute;
+  top: 30%;
+  left: 70%;
+}
+
+#pastoria-city{
+  position: absolute;
+  top: 50%;
+  left: 30%;
+}
+
+#sunyshore-city{
+  position: absolute;
+  top: 68%;
+  left: 53%;
+}
+
+#sinnoh-pokemon-league{
+  position: absolute;
+  top: 66%;
+  left: 90%;
+}
+
+#oreburgh-mine{
+  position: absolute;
+  top: 70%;
+  left: 25%;
+}
+
+#valley-windworks{
+  position: absolute;
+  top: 12%;
+  left: 87%;
+}
+
+#eterna-forest{
+  position: absolute;
+  top: 10%;
+  left: 53%;
+}
+
+#fuego-ironworks{
+  position: absolute;
+  top: 7%;
+  left: 25%;
+}
+
+#mt-coronet{
+  position: absolute;
+  top: 30%;
+  left: 15%;
+}
+
+#great-marsh{
+  position: absolute;
+  top: 27%;
+  left: 80%;
+}
+
+#solaceon-ruins{
+  position: absolute;
+  top: 13%;
+  left: 45%;
+}
+
+#sinnoh-victory-road{
+  position: absolute;
+  top: 32%;
+  left: 42%;
+}
+
+#ravaged-path{
+  position: absolute;
+  top: 2%;
+  left: 74%;
+}
+
+#oreburgh-gate{
+  position: absolute;
+  top: 48%;
+  left: 21%;
+}
+
+#stark-mountain{
+  position: absolute;
+  top: 0%;
+  left: 14%;
+}
+
+#spring-path{
+  position: absolute;
+  top: 19%;
+  left: 20%;
+}
+
+#turnback-cave{
+  position: absolute;
+  top: 10%;
+  left: 65%;
+} 
+
+#wayward-cave{
+  position: absolute;
+  top: 50%;
+  left: 57%;
+}
+
+#snowpoint-temple{
+  position: absolute;
+  top: 44%;
+  left: 82%;
+}
+
 #myPokemons {
   display: flex;
   flex-wrap: wrap;
-  max-width: 600px;
+  max-width: 800px;
   align-items: center;
   justify-content: center;
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
@@ -178,7 +342,7 @@ img {
   box-shadow: rgba(72, 95, 199, 0.25) 0 0 0 0.125em;
 }
 
-.locations {
+.locations{
   transform: scale(0.8);
   margin-bottom: -13px;
   align-self: center;
@@ -222,4 +386,8 @@ img {
 
 .progressBar{
   width: 250px;
+}
+
+#lostOrWon{
+ transform: scale(3);
 }
