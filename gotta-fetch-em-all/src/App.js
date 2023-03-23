@@ -4,6 +4,8 @@ import DisplayLocations from "./Components/DisplayLocations";
 import Sprite from "./Components/Sprite";
 import UserPokemons from "./Components/UserPokemons";
 import ProgressBar from "./Components/ProgressBar";
+import pin from "./pin.png";
+
 
 function App() {
   const [dataLocation, setDataLocation] = useState(null);
@@ -49,7 +51,7 @@ function App() {
 
   useEffect(() => {
     readAPIUserSprite();
-  }, []);
+  },[]);
 
   const readAPILocations = async () => {
     const response = await fetch("https://pokeapi.co/api/v2/location");
@@ -128,14 +130,18 @@ function App() {
 
       if (playerTurn) {
         pc.hp -= myTotal;
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setComputerHP(`Health: ${pc.hp}`);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        if (pc.hp < 0) {
+          pc.hp = 0;
+        } 
         setPcHp(pc.hp);
       } else {
         my.hp -= pcTotal;
-        await new Promise((resolve) => setTimeout(resolve, 500));
-        setPlayerHp(`Health: ${my.hp}`);
-        setMyHp(my.hp);
+        await new Promise((resolve) => setTimeout(resolve, 1000));
+        if (my.hp < 0) {
+          my.hp = 0;
+        } 
+          setMyHp(my.hp);
       }
 
       playerTurn = !playerTurn;
@@ -145,7 +151,9 @@ function App() {
       console.log("You won!");
       setPlayerHp("You won!");
       await new Promise((resolve) => setTimeout(resolve, 5000));
-      initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`);
+      if (!initialPokemonList.includes(`https://pokeapi.co/api/v2/pokemon/${pc.name}`)) {
+        initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`);
+      }
       readAPIUserSprite();
       handlePress(true);
       setChoosenPokemon(true);
@@ -169,10 +177,12 @@ function App() {
   return (
     <div className="App">
       {presArea ? (
-        <div>
+        <div id="allLocations">
           {dataLocation &&
             dataLocation.map((location, index) => (
               <DisplayLocations
+                logo={pin}
+                id={location.name}
                 key={index}
                 location={location.url}
                 name={location.name}
@@ -184,7 +194,7 @@ function App() {
             ))}
         </div>
       ) : areaCondition ? (
-        <div id="all">
+          <div id="all">
           <div id="PokemonPC">
             <h2>Your opponent is:</h2>
             <div className="progressBar">
@@ -221,7 +231,7 @@ function App() {
               </div>
             ) : (
               <div>
-                <h3>Your fighter is:</h3>
+                <h2>Your fighter is:</h2>
                 <ProgressBar value={myHp} max={100} />
                 <Sprite
                   svg={selectedPokemon.svg}
@@ -245,9 +255,9 @@ function App() {
           </div>
         </div>
       ) : (
-        <div>
-          <h3>There are no pokemon in this area.</h3>
-          <button
+        <div id="noPokemon">
+          <h3 className="textNoPokemon">There are no pokemon in this area.</h3>
+              <button className="textNoPokemon"
             onClick={() => {
               handlePress(true);
               setAreaCondition(true);
