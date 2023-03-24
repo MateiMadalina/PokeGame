@@ -1,5 +1,4 @@
 const Video = (props) => {
-    const src = props.src;
     const click = props.click;
 
     return (

@@ -4,6 +4,7 @@ const Sprite = (props) => {
   const click = props.click;
   const buttonName = props.buttonName;
   const hp = props.hp;
+  
   return (
     <div>
       <p id="lostOrWon">{hp}</p>

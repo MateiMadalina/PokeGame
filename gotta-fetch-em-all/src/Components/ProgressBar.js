@@ -1,6 +1,6 @@
-import React from "react";
-
-const ProgressBar = ({ value, max }) => {
+const ProgressBar = (prop) => {
+  const value = prop.value;
+  const max = prop.max
   const percentage = Math.floor((value / max) * 100);
   const barStyle = {
     borderRadius: '10px 10px 10px 10px',

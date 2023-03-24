@@ -10,16 +10,14 @@
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
 }
 
-#pickachu{
+#pickachu {
   position: absolute;
   left: 0%;
-  top:34%
+  top: 34%;
 }
 
-
-
-#startGame{
-  transform:scale(2);
+#startGame {
+  transform: scale(2);
   align-self: center;
   background-color: #fff;
   background-image: none;
@@ -29,7 +27,7 @@
   border-radius: 15px 225px 255px 15px 15px 255px 225px 15px;
   border-style: solid;
   border-width: 2px;
-  box-shadow: rgba(0, 0, 0, .2) 15px 28px 25px -18px;
+  box-shadow: rgba(0, 0, 0, 0.2) 15px 28px 25px -18px;
   box-sizing: border-box;
   color: #41403e;
   cursor: pointer;
@@ -38,7 +36,7 @@
   font-size: 1rem;
   line-height: 23px;
   outline: none;
-  padding: .75rem;
+  padding: 0.75rem;
   text-decoration: none;
   transition: all 235ms ease-in-out;
   border-bottom-left-radius: 15px 255px;
@@ -51,16 +49,15 @@
 }
 
 #startGame:hover {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 8px -5px;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 8px -5px;
   transform: translate3d(0, 2px, 0);
 }
 
 #startGame:focus {
-  box-shadow: rgba(0, 0, 0, .3) 2px 8px 4px -6px;
+  box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
 }
 
-
-#all{
+#all {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -93,8 +90,7 @@
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
 }
 
-#noPokemon{
-
+#noPokemon {
   height: 100vh;
   display: flex;
   align-items: center;
@@ -109,131 +105,130 @@
   cursor: url(https://cdn.custom-cursor.com/db/249/32/arrow2282.png), pointer !important;
 }
 
-.textNoPokemon{
+.textNoPokemon {
   transform: scale(1.5);
 }
 
-.pin{
+.pin {
   background-image: url(./pin.png);
-  /* transform: scale(0.8); */
-} 
+}
 
-#canalave-city{
+#canalave-city {
   position: absolute;
   top: 30%;
   left: 56%;
-  width: 130px
+  width: 130px;
 }
 
-#eterna-city{
+#eterna-city {
   position: absolute;
   top: 30%;
   left: 70%;
 }
 
-#pastoria-city{
+#pastoria-city {
   position: absolute;
   top: 50%;
   left: 30%;
 }
 
-#sunyshore-city{
+#sunyshore-city {
   position: absolute;
   top: 68%;
   left: 53%;
 }
 
-#sinnoh-pokemon-league{
+#sinnoh-pokemon-league {
   position: absolute;
   top: 66%;
   left: 90%;
 }
 
-#oreburgh-mine{
+#oreburgh-mine {
   position: absolute;
   top: 70%;
   left: 25%;
 }
 
-#valley-windworks{
+#valley-windworks {
   position: absolute;
   top: 12%;
   left: 87%;
 }
 
-#eterna-forest{
+#eterna-forest {
   position: absolute;
   top: 10%;
   left: 53%;
 }
 
-#fuego-ironworks{
+#fuego-ironworks {
   position: absolute;
   top: 7%;
   left: 25%;
 }
 
-#mt-coronet{
+#mt-coronet {
   position: absolute;
   top: 30%;
   left: 15%;
 }
 
-#great-marsh{
+#great-marsh {
   position: absolute;
   top: 27%;
   left: 80%;
 }
 
-#solaceon-ruins{
+#solaceon-ruins {
   position: absolute;
   top: 13%;
   left: 45%;
 }
 
-#sinnoh-victory-road{
+#sinnoh-victory-road {
   position: absolute;
   top: 32%;
   left: 42%;
 }
 
-#ravaged-path{
+#ravaged-path {
   position: absolute;
   top: 2%;
   left: 74%;
 }
 
-#oreburgh-gate{
+#oreburgh-gate {
   position: absolute;
   top: 48%;
   left: 21%;
 }
 
-#stark-mountain{
+#stark-mountain {
   position: absolute;
   top: 0%;
   left: 14%;
 }
 
-#spring-path{
+#spring-path {
   position: absolute;
   top: 19%;
   left: 20%;
 }
 
-#turnback-cave{
+#turnback-cave {
   position: absolute;
   top: 10%;
   left: 65%;
-} 
+}
 
-#wayward-cave{
+#wayward-cave {
   position: absolute;
   top: 50%;
   left: 57%;
 }
 
-#snowpoint-temple{
+#snowpoint-temple {
   position: absolute;
   top: 44%;
   left: 82%;
@@ -404,7 +399,7 @@ img {
   box-shadow: rgba(72, 95, 199, 0.25) 0 0 0 0.125em;
 }
 
-.locations{
+.locations {
   transform: scale(0.8);
   margin-bottom: -13px;
   align-self: center;
@@ -446,10 +441,14 @@ img {
   box-shadow: rgba(0, 0, 0, 0.3) 2px 8px 4px -6px;
 }
 
-.progressBar{
+.progressBar {
   width: 250px;
 }
 
-#lostOrWon{
- transform: scale(3);
+#lostOrWon {
+  transform: scale(3);
+}
+
+h1{
+  margin-bottom: 780px;
 }
