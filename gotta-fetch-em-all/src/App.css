@@ -302,11 +302,12 @@ img {
 }
 
 #btnFight {
+  transform: scale(1.5);
   margin-left: -380px;
   align-items: center;
   appearance: none;
   background-color: #fff;
-  border: 1px solid #dbdbdb;
+  border: 2px solid #f90909;
   border-radius: 0.375em;
   box-shadow: none;
   box-sizing: border-box;
