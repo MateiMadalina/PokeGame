@@ -4,9 +4,9 @@ import DisplayLocations from "./Components/DisplayLocations";
 import Sprite from "./Components/Sprite";
 import UserPokemons from "./Components/UserPokemons";
 import ProgressBar from "./Components/ProgressBar";
+import Fight from "./Components/Fight";
 import pin from "./pin.png";
 import Video from "./Components/Video";
-
 
 function App() {
   const [dataLocation, setDataLocation] = useState(null);
@@ -36,7 +36,7 @@ function App() {
     setDataLocation(data.results);
   };
 
-  const readAPILocation = async (link) => {
+  const readAPIDetailedLocation = async (link) => {
     const response = await fetch(`${link}`);
     const data = await response.json();
     if (data.areas.length > 0) {
@@ -115,64 +115,6 @@ function App() {
     });
   };
 
-  const formula = (B, D, Z) => {
-    return ((((2 / 5 + 2) * B * 60) / D / 50 + 2) * Z) / 255;
-  };
-
-  const handleFight = async (pc, my) => {
-    let playerTurn = true;
-
-    while (pc.hp > 0 && my.hp > 0) {
-      const pcTotal = formula(pc.attack, pc.defense, pc.random);
-      const myTotal = formula(my.attack, my.defense, my.random);
-
-      if (playerTurn) {
-        pc.hp -= myTotal;
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        if (pc.hp < 0) {
-          pc.hp = 0;
-        }
-        setPcHp(pc.hp);
-      } else {
-        my.hp -= pcTotal;
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        if (my.hp < 0) {
-          my.hp = 0;
-        }
-        setMyHp(my.hp);
-      }
-
-      playerTurn = !playerTurn;
-    }
-
-    if (pc.hp <= 0 && my.hp >= 0) {
-      setPlayerHp("You won!");
-      await new Promise((resolve) => setTimeout(resolve, 5000));
-      if (!initialPokemonList.includes(`https://pokeapi.co/api/v2/pokemon/${pc.name}`))
-       {
-        initialPokemonList.push(`https://pokeapi.co/api/v2/pokemon/${pc.name}`);
-       }
-      readAPIUserSprite();
-      handlePress(true);
-      setChoosenPokemon(true);
-      setPlayerHp("");
-      setComputerHP("");
-      setMyHp(100);
-      setPcHp(100);
-    } else if (pc.hp >= 0 && my.hp <= 0) {
-      setPlayerHp("You lost!");
-      await new Promise((resolve) => {
-        setTimeout(resolve, 5000);
-      });
-      handlePress(true);
-      setChoosenPokemon(true);
-      setPlayerHp("");
-      setComputerHP("");
-      setMyHp(100);
-      setPcHp(100);
-    }
-  };
-
   return (
     <div className="App">
       <Video
@@ -194,7 +136,7 @@ function App() {
                   location={location.url}
                   name={location.name}
                   click={() => {
-                    readAPILocation(location.url);
+                    readAPIDetailedLocation(location.url);
                     handlePress(false);
                   }}
                 />
@@ -237,27 +179,21 @@ function App() {
                   </div>
                 </div>
               ) : (
-                <div>
-                  <h2>Your fighter is:</h2>
-                  <ProgressBar value={myHp} max={100} />
-                  <Sprite
-                    svg={selectedPokemon.svg}
-                    name={selectedPokemon.name}
-                    buttonName="Choose another fighter"
-                    hp={playerHP}
-                    click={() => {
-                      setChoosenPokemon(true);
-                    }}
-                  />
-                  <button
-                    id="btnFight"
-                    onClick={() => {
-                      handleFight(pcFighter, myFighter);
-                    }}
-                  >
-                    Fight
-                  </button>
-                </div>
+                <Fight
+                  myHp={myHp}
+                  selectedPokemon={selectedPokemon}
+                  playerHP={playerHP}
+                  setChoosenPokemonCallback={setChoosenPokemon}
+                  pcFighter={pcFighter}
+                  myFighter={myFighter}
+                  setPcHpCallback={setPcHp}
+                  setMyHpCallback={setMyHp}
+                  setPlayerHpCallback={setPlayerHp}
+                  initialPokemonList={initialPokemonList}
+                  readAPIUserSpriteCallback={readAPIUserSprite}
+                  handlePressCallback={handlePress}
+                  setComputerHPCallback={setComputerHP}
+                />
               )}
             </div>
           </div>
